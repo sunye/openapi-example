@@ -1,0 +1,9 @@
+= Spring and OpenAPI example
+
+
+[source,shell]
+----
+
+
+curl -H "Accept: application/json" http://localhost:8080/api/pets/1
+----

@@ -1,11 +1,11 @@
-package org.atlanmod.spring;
+package org.atlanmod.spring.openapi.api;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class Application {
+public class OpenAPIApplication {
     public static void main(String[] args) {
-        SpringApplication.run(Application.class, args);
+        SpringApplication.run(OpenAPIApplication.class, args);
     }
 }

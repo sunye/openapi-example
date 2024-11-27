@@ -1,12 +1,15 @@
-package org.atlanmod.petshop.openapi.api;
+package org.atlanmod.spring.openapi.api;
 
-import org.atlanmod.petshop.openapi.model.Pet;
+import org.atlanmod.spring.openapi.api.PetsApiDelegate;
+import org.atlanmod.spring.openapi.model.Pet;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+
 
 @Service
 public class PetsApiDelegateImpl implements PetsApiDelegate {
@@ -15,11 +18,8 @@ public class PetsApiDelegateImpl implements PetsApiDelegate {
 
     @Override
     public ResponseEntity<Pet> findPetById(Long id) {
-        Pet pet = getPets().stream().filter(p -> id.equals(p.getId())).findAny().orElse(null);
-        if (pet != null) {
-            return ResponseEntity.ok(pet);
-        }
-        return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        Optional<Pet> pet = getPets().stream().findFirst();
+        return pet.map(ResponseEntity::ok).orElseGet(() -> new ResponseEntity<>(null, HttpStatus.NOT_FOUND));
     }
 
     private List<Pet> getPets() {
@@ -29,6 +29,12 @@ public class PetsApiDelegateImpl implements PetsApiDelegate {
         pet0.setTag("cat");
         pets.add(pet0);
         return pets;
+    }
+
+    @Override
+    public ResponseEntity<List<Pet>> findPets(List<String> tags, Integer limit)  {
+        List<Pet> pets = getPets();
+        return ResponseEntity.ok(pets);
     }
 
 }
